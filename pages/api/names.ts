@@ -11,11 +11,26 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    if (req.method !== 'POST') {
-        res.status(405).json({ error: 'Method not allowed' });
-        return;
+    switch (req.method) {
+        case 'POST':
+            return await handlePost(req, res);
+        case 'GET':
+            return await handleGet(req, res);
+        default:
+            res.status(405).json({ error: 'Method not allowed' });
+            return;
     }
 
+}
+
+const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
+    const snapshot = await firebase.firestore().collection('names').get();
+    const names = snapshot.docs.map((doc) => doc.data().name);
+
+    res.status(200).json({ names });
+};
+
+const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
@@ -33,5 +48,5 @@ export default async function handler(
         name: result.data.name,
     });
 
-    res.status(200).json({ name: result.data.name });
-}
+    res.redirect(303, 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley');
+};

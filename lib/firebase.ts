@@ -1,6 +1,6 @@
-import admin from 'firebase-admin';
+import admin, { apps } from 'firebase-admin';
 
-export const firebase = admin.initializeApp({
+export const firebase = apps.length > 0 && apps[0] ? apps[0] : admin.initializeApp({
   credential: admin.credential.cert(
     {
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
