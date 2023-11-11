@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import z from 'zod';
-import { firebase } from '../firebase';
+import { firebase } from '../../lib/firebase';
 
 const schema = z.object({
     name: z.string().min(1).max(10),
