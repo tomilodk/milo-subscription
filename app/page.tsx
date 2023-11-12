@@ -13,7 +13,7 @@ export default function Home() {
 
         const formData = new FormData(event.currentTarget);
 
-        await axios.post(
+        const response = await axios.post(
             "/api/names",
             {
                 name: formData.get("name"),
@@ -25,6 +25,10 @@ export default function Home() {
                 },
             }
         );
+
+        if(response.status === 200) {
+            window.location.href = response.data.url;
+        }
     }
 
     useEffect(() => {

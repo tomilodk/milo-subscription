@@ -48,5 +48,5 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
         name: result.data.name,
     });
 
-    res.redirect(303, 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley');
+    res.status(200).json({ url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" });
 };
