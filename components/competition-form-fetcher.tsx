@@ -4,7 +4,10 @@ import { FormEvent } from "react";
 import axios from "axios";
 import { CompetitionForm } from "./competition-form";
 
-export function CompetitionFormFetcher() {
+interface Props{
+    rolled: boolean;
+}
+export function CompetitionFormFetcher(props: Props) {
     async function formCallback(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
@@ -18,5 +21,5 @@ export function CompetitionFormFetcher() {
             window.location.href = response.data.url;
         }
     }
-    return <CompetitionForm callback={formCallback} />;
+    return <CompetitionForm rolled={props.rolled} callback={formCallback} />;
 }

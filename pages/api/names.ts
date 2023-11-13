@@ -13,6 +13,7 @@ export default async function handler(
 ) {
     switch (req.method) {
         case 'POST':
+            console.log("headers", req.headers);
             return await handlePost(req, res);
         case 'GET':
             return await handleGet(req, res);
