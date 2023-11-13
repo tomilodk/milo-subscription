@@ -13,7 +13,6 @@ export default async function handler(
 ) {
     switch (req.method) {
         case 'POST':
-            console.log("headers", req.headers);
             return await handlePost(req, res);
         case 'GET':
             return await handleGet(req, res);
@@ -38,6 +37,20 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(400).json({ error: result.error });
         return;
     }
+
+    const ip = req.headers["x-forwarded-for"];
+
+    const ipSnapshot = await firebase.firestore().collection('ips').where('ip', '==', ip).get();
+
+    if (!ipSnapshot.empty) {
+        res.status(200).json({ error: 'You have already entered...', url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" });
+        return;
+    } else {
+        await firebase.firestore().collection('ips').add({
+            ip: ip,
+        });
+    }
+
     const nameSnapshot = await firebase.firestore().collection('names').where('name', '==', result.data.name).get();
 
     if (!nameSnapshot.empty) {
