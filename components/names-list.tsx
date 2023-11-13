@@ -2,7 +2,6 @@ import React from "react";
 
 interface Props {
     users: string[];
-    rolled: boolean;
 }
 
 const NamesList: React.FC<Props> = (props) => {

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import z from 'zod';
 import { firebase } from '../../lib/firebase';
+import { getNames } from '@/lib/names';
 
 const schema = z.object({
     name: z.string().min(1).max(10),
@@ -28,13 +29,6 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json({ names });
 };
-
-export const getNames = async () => {
-    const snapshot = await firebase().firestore().collection('names').get();
-    const names = snapshot.docs.map((doc) => doc.data().name);
-
-    return names;
-}
 
 const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     const result = schema.safeParse(req.body);
