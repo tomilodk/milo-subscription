@@ -9,12 +9,6 @@ const fetchUsers = async (): Promise<string[]> => {
 };
 
 export default async function NamesListFetcher() {
-    // const [rolled, setRolled] = useState<boolean>(false);
-
-    // useEffect(() => {
-    //     setRolled(!!(localStorage.getItem("rolled") ?? false));
-    // }, []);
-
     const users = await fetchUsers();
 
     return <NamesList users={users} rolled={false} />;
