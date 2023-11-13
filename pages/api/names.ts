@@ -24,11 +24,17 @@ export default async function handler(
 }
 
 const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
-    const snapshot = await firebase.firestore().collection('names').get();
-    const names = snapshot.docs.map((doc) => doc.data().name);
+    const names = await getNames();
 
     res.status(200).json({ names });
 };
+
+export const getNames = async () => {
+    const snapshot = await firebase.firestore().collection('names').get();
+    const names = snapshot.docs.map((doc) => doc.data().name);
+
+    return names;
+}
 
 const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
     const result = schema.safeParse(req.body);

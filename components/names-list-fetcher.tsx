@@ -1,15 +1,9 @@
 import React from "react";
 import NamesList from "./names-list";
-import axios from "axios";
-
-const fetchUsers = async (): Promise<string[]> => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/names`);
-
-    return (response.data.names as string[]) ?? [];
-};
+import { getNames } from "@/pages/api/names";
 
 export default async function NamesListFetcher() {
-    const users = await fetchUsers();
+    const users = await getNames();
 
     return <NamesList users={users} rolled={false} />;
 }
