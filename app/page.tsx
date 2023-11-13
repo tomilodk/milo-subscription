@@ -7,7 +7,7 @@ export const fetchCache = "only-no-store";
 
 export default async function Home() {
     return (
-        <section className="flex flex-col h-screen mx-auto max-w-sm py-10">
+        <section className="flex flex-col h-screen max-w-sm py-10 mx-auto px-6">
             <TopSection />
             <Suspense fallback={<p>Loading...</p>}>
                 <NamesListFetcher />
