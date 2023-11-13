@@ -30,7 +30,7 @@ const handleGet = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 export const getNames = async () => {
-    const snapshot = await firebase.firestore().collection('names').get();
+    const snapshot = await firebase().firestore().collection('names').get();
     const names = snapshot.docs.map((doc) => doc.data().name);
 
     return names;
@@ -46,25 +46,25 @@ const handlePost = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const ip = req.headers["x-forwarded-for"];
 
-    const ipSnapshot = await firebase.firestore().collection('ips').where('ip', '==', ip).get();
+    const ipSnapshot = await firebase().firestore().collection('ips').where('ip', '==', ip).get();
 
     if (!ipSnapshot.empty) {
         res.status(200).json({ error: 'You have already entered...', url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" });
         return;
     } else {
-        await firebase.firestore().collection('ips').add({
+        await firebase().firestore().collection('ips').add({
             ip: ip,
         });
     }
 
-    const nameSnapshot = await firebase.firestore().collection('names').where('name', '==', result.data.name).get();
+    const nameSnapshot = await firebase().firestore().collection('names').where('name', '==', result.data.name).get();
 
     if (!nameSnapshot.empty) {
         res.status(400).json({ error: 'Name already exists' });
         return;
     }
 
-    await firebase.firestore().collection('names').add({
+    await firebase().firestore().collection('names').add({
         name: result.data.name,
     });
 
