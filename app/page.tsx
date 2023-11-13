@@ -2,7 +2,7 @@ import NamesListFetcher from "@/components/names-list-fetcher";
 import TopSection from "@/components/top-section";
 import { Suspense } from "react";
 
-export default function Home() {
+export default async function Home() {
     return (
         <section className="flex flex-col h-screen mx-auto max-w-sm py-10">
             <TopSection />
