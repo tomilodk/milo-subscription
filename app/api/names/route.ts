@@ -21,15 +21,32 @@ export async function POST(req: Request) {
 
     const ip = req.headers.get("x-forwarded-for");
 
-    const ipSnapshot = await firebase().firestore().collection('ips').where('ip', '==', ip).get();
+    // const ipSnapshot = await firebase().firestore().collection('ips').where('ip', '==', ip).get();
 
-    if (!ipSnapshot.empty) {
-        return Response.json({ error: 'You have already entered...', url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" });
-    } else {
-        await firebase().firestore().collection('ips').add({
-            ip: ip,
-        });
-    }
+    // if (!ipSnapshot.empty) {
+
+    //     ipSnapshot.docs.forEach(async (doc) => {
+    //         const data = doc.data();
+    //         if (data.countLeft <= 0) {
+    //             return Response.json({ error: 'You have already entered...', url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" });
+    //         } else {
+    //             await doc.ref.update({
+    //                 countLeft: data.countLeft - 1
+    //             });
+    //         }
+    //     })
+
+
+    // } else {
+    //     await firebase().firestore().collection('ips').add({
+    //         ip: ip,
+    //         countLeft: 20
+    //     });
+    // }
+
+    await firebase().firestore().collection('ips').add({
+        ip: ip
+    });
 
     const nameSnapshot = await firebase().firestore().collection('names').where('name', '==', result.data.name).get();
 
